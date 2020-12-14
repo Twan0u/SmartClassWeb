@@ -9,55 +9,56 @@ class List extends Component {
             isLoading   : true,
             size        : 1,               //number of items to show when not see all
             title       : props.title,     //title of the list component
-            data        : [],              //data of all elements of the list
+            tasks       : [],
+            events      : [],
         };
 
         // Cette liaison est nécéssaire afin de permettre
         // l'utilisation de `this` dans la fonction de rappel.
         this.handleSeeMore = this.handleSeeMore.bind(this);
     }
+    componentDidMount() {
+        /*fetch("http://192.168.1.22/events")
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        isLoading : false,
+                        events : result.items
+                    });
+                },
+                // Remarque : il est important de traiter les erreurs ici
+                // au lieu d'utiliser un bloc catch(), pour ne pas passer à la trappe
+                // des exceptions provenant de réels bugs du composant.
+                (error) => {
+                    this.setState({
+                        isLoading : false,
+                        error
+                    });
+                }
+            )
+        fetch("http://192.168.1.22/tasks")
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        tasks : result.items,
+                        isLoading : false
+                    });
+                },
+                // Remarque : il est important de traiter les erreurs ici
+                // au lieu d'utiliser un bloc catch(), pour ne pas passer à la trappe
+                // des exceptions provenant de réels bugs du composant.
+                (error) => {
+                    this.setState({
+                        isLoading : false,
+                        error
+                    });
+                }
+            )*/
 
-    async componentDidMount() {//todo remove async
-        const delay = async (ms:number) => new Promise(res => setTimeout(res, ms));
-        await delay(1000);//todo réellement faire un appel à l'api
-
-        //simule un appel à une api
-        let task_data = [
-            {
-                date : "2020-11-10",
-                title : "Tester cette fonction",
-            },
-            {
-                date : "2020-11-27",
-                title : "Teste 123",
-            },
-            {
-                date : "2020-11-30",
-                title : "Teste 3",
-            },
-        ];
-        //simule un appel à une api
-        let events_data = [//todo
-            {
-                date : "2020-11-22",
-                title : "Tester cette fonction",
-            },
-            {
-                date : "2020-11-23",
-                title : "Teste 123",
-            },
-        ];
-
-        // formatage des données
-        this.dataFormating(task_data,"fa fa-check");
-        this.dataFormating(events_data,"fa fa-calendar");
-
-        // marge les 2 listes et les trie par ordre chronologique
-        let data = this.merge(task_data,events_data);
-
-        //change le state
-        this.setState({isLoading : false, data : data});
     }
+
     componentWillUnmount() {}
 
     merge(tasks, events){
@@ -74,12 +75,22 @@ class List extends Component {
         });
     }
     handleSeeMore(){
-        let newSize = (this.state.size===1)?this.state.data.length:1;
+        let newSize = (this.state.size===1)?(this.state.tasks.length+this.state.events.length):1;
         this.setState({size : newSize});
     }
 
     listItems(i){
-       let items = this.state.data?.slice(0, i);
+        let tasks_data = this.state.tasks;
+        let events_data = this.state.events;
+
+        // Formatage des données
+        this.dataFormating(tasks_data,"fa fa-check");
+        this.dataFormating(events_data,"fa fa-calendar");
+
+        // marge les 2 listes et les trie par ordre chronologique
+        let data = this.merge(tasks_data,events_data);
+
+       let items = data?.slice(0, i);
         items = items?.map(item =>{
             return <Item
                 icon = {item.icon}
@@ -98,7 +109,7 @@ class List extends Component {
                 <div className="card">
                     <header className="card-header">
                         <p className="card-header-title">
-                            {this.state.title} ({this.state.isLoading?"Loading":this.state.data.length})
+                            {this.state.title} ({this.state.isLoading?"Loading":(this.state.events.length+this.state.tasks.length)})
                         </p>
                         <a href="http://www.google.com"  className="card-header-icon" aria-label="more options">
                                         <span className="icon">
