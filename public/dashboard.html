@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard SmartClass</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+    <!-- Bulma Version 0.9.0-->
+    <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css" />
+    <link rel="stylesheet" type="text/css" href="admin.css">
+
+</head>
+<style>
+
+    body{
+        background: rgb(40,199,250);background: linear-gradient(58deg, rgba(40,199,250,1) 0%, rgba(255,48,79,1) 100%);
+    }
+
+</style>
+<body>
+
+    <!-- START NAV -->
+    <nav class="navbar is-white">
+        <div class="container">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="#">
+                    <img src="/assets/logo.png" width="112" height="28">
+                </a>
+                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+            <div id="navMenu" class="navbar-menu">
+                <div class="navbar-end">
+                    <a class="navbar-item" href="/dashboard">Acceuil</a>
+                    <a class="navbar-item" href="#">Ma Classe</a>
+                    <a class="navbar-item" href="#">Mes Interrogations</a>
+                    <div class="navbar-item">
+                        <div class="buttons">
+                            <a class="button is-info" href="/logout">
+                                <strong>Se Déconnecter</strong>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </nav>
+    <br/>
+    <!-- END NAV -->
+    <div class="container">
+        <div class="columns">
+            <div class="column is-12">
+                <section class="hero is-info welcome is-small">
+                    <div class="hero-body">
+                        <div class="container">
+                            <h1 class="title">
+                                Bonjour Monsieur Machin
+                            </h1>
+                            <h2 class="subtitle">
+                                J'espère que vous passez une bonne journée!
+                            </h2>
+                        </div>
+                    </div>
+                </section>
+                <br/>
+                <section class="info-tiles">
+                    <div class="tile is-ancestor has-text-centered">
+                        <div class="tile is-parent">
+                            <article class="tile is-child box">
+                                <p class="title">42</p>
+                                <p class="subtitle">élèves</p>
+                            </article>
+                        </div>
+                        <div class="tile is-parent">
+                            <article class="tile is-child box">
+                                <p class="title">12</p>
+                                <p class="subtitle">Interrogations <span class="tag is-danger">(non signées)</span> </p>
+                            </article>
+                        </div>
+                        <div class="tile is-parent">
+                            <article class="tile is-child box">
+                                <p class="title">69</p>
+                                <p class="subtitle">Interrogations <span class="tag is-success">(signées)</span></p>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+                <div class="columns">
+                    <div class="column is-6">
+
+                        <div class="card events-card">
+                            <header class="card-header">
+                                <p class="card-header-title">
+                                    Tâches
+                                </p>
+                                <a href="#" class="card-header-icon" aria-label="more options">
+                                    <span class="icon">
+                                        <a class="button is-small is-primary" href="#"><i class="fa fa-plus"></i></a>
+                                    </span>
+                                </a>
+                            </header>
+                            <div class="card-table">
+                                <div class="content">
+                                    <table class="table is-fullwidth is-striped">
+                                        <tbody>
+                                            <tr>
+                                                <td width="5%"><i class="fa fa-check"></i></td>
+                                                <td>22 Octobre : Ramener la coupe à la maison  </td>
+                                                <td class="level-right"><a class="button is-small is-info" href="#"><i class="fa fa-chevron-right"></i></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td width="5%"><i class="fa fa-check"></i></td>
+                                                <td>25 Octobre : Autre tâche blabla</td>
+                                                <td class="level-right"><a class="button is-small is-info" href="#"><i class="fa fa-chevron-right"></i></a></td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <footer class="card-footer">
+                                <a href="#" class="card-footer-item">Tout Voir</a>
+                            </footer>
+                        </div>
+
+                        <div class="card events-card">
+                            <header class="card-header">
+                                <p class="card-header-title">
+                                    Evenements
+                                </p>
+                                <a href="#" class="card-header-icon" aria-label="more options">
+                                    <span class="icon">
+                                        <a class="button is-small is-primary" href="#"><i class="fa fa-plus"></i></a>
+                                    </span>
+                                </a>
+                            </header>
+                            <div class="card-table">
+                                <div class="content">
+                                    <table class="table is-fullwidth is-striped">
+                                        <tbody>
+                                        <tr>
+                                            <td width="5%"><i class="fa fa-calendar"></i></td>
+                                            <td>12 Octobre : Piscine  </td>
+                                            <td class="level-right"><a class="button is-small is-info" href="#"><i class="fa fa-chevron-right"></i></a></td>
+                                        </tr>
+                                        <tr>
+                                            <td width="5%"><i class="fa fa-calendar"></i></td>
+                                            <td>25 Octobre : Interrogation de mathématique</td>
+                                            <td class="level-right"><a class="button is-small is-info" href="#"><i class="fa fa-chevron-right"></i></a></td>
+                                        </tr>
+                                        <tr>
+                                            <td width="5%"><i class="fa fa-calendar"></i></td>
+                                            <td>29 Octobre : Interrogation de Français</td>
+                                            <td class="level-right"><a class="button is-small is-info" href="#"><i class="fa fa-chevron-right"></i></a></td>
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <footer class="card-footer">
+                                <a href="#" class="card-footer-item">Tout Voir</a>
+                            </footer>
+                        </div>
+
+                    </div>
+
+                    <div class="column is-6">
+                        <div class="card">
+                            <header class="card-header">
+                                <p class="card-header-title">
+                                    Recherche d'un(e) élève
+                                </p>
+                                <a href="#" class="card-header-icon" aria-label="more options">
+                                  <span class="icon">
+                                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                  </span>
+                                </a>
+                            </header>
+                            <div class="card-content">
+                                <div class="content">
+                                    <div class="control has-icons-left has-icons-right">
+                                        <input class="input is-large" type="text" placeholder="">
+                                        <span class="icon is-medium is-left">
+                                          <i class="fa fa-search"></i>
+                                        </span>
+                                                            <span class="icon is-medium is-right">
+                                          <i class="fa fa-user"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script async type="text/javascript" src="../js/bulma.js"></script>
+</body>
+
+</html>

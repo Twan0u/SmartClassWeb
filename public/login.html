@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SmartClass</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+body{
+        background: rgb(40,199,250);background: linear-gradient(58deg, rgba(40,199,250,1) 0%, rgba(255,48,79,1) 100%);
+}
+    </style>
+  </head>
+  <body>
+<section class="hero is-primary is-fullheight" style = "background: rgb(40,199,250);background: linear-gradient(58deg, rgba(40,199,250,1) 0%, rgba(255,48,79,1) 100%);">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-5-tablet is-4-desktop is-3-widescreen">
+
+
+
+          <div class="notification is-warning">
+            <button class="delete"></button>
+            La combinaison adresse mail / mot de passe est incorrecte ( cette notif est un test )
+          </div>
+          <script><!-- script de notifications -->
+          document.addEventListener('DOMContentLoaded', () => {
+            (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
+              var $notification = $delete.parentNode;
+
+              $delete.addEventListener('click', () => {
+                $notification.parentNode.removeChild($notification);
+              });
+            });
+          });
+          </script>
+
+
+
+          <form action="/auth" method="post" class="box">
+            <div class="field">
+              <label for="" class="label">e-mail de l'utilisateur</label>
+              <div class="control has-icons-left">
+                <input type="email" placeholder="ex. test@smartclass.com" class="input" name="userMail" id="userMail" required>
+                <span class="icon is-small is-left">
+                  <i class="fa fa-envelope"></i>
+                </span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="" class="label">mot de passe</label>
+              <div class="control has-icons-left">
+                <input type="password" placeholder="*******" class="input" name="userPassword" id="userPassword" required>
+                <span class="icon is-small is-left">
+                  <i class="fa fa-lock"></i>
+                </span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="" class="checkbox">
+                <input type="checkbox">
+               Se souvenir de moi
+              </label>
+            </div>
+            <div class="field" >
+              <button type="submit" class="button is-success" style = "background: rgba(40,199,250,1);">
+                connecter
+              </button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+  </body>
+</html>
