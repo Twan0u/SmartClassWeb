@@ -13,8 +13,6 @@ class List extends Component {
             events      : [],
         };
 
-        // Cette liaison est nécéssaire afin de permettre
-        // l'utilisation de `this` dans la fonction de rappel.
         this.handleSeeMore = this.handleSeeMore.bind(this);
     }
     componentDidMount() {
