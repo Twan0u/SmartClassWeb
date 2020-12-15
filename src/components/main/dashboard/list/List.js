@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import Item from "./item";
-/*import Modal from "./modal";*/
+/*import Modal from "./modal*/
+import CreateAuthProvider from '../../../../libraries/createAuthProvider'
 
 class List extends Component {
     constructor(props) {
@@ -16,45 +17,60 @@ class List extends Component {
         this.handleSeeMore = this.handleSeeMore.bind(this);
     }
     componentDidMount() {
-        /*fetch("http://192.168.1.22/events")
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    this.setState({
-                        isLoading : false,
-                        events : result.items
-                    });
-                },
-                // Remarque : il est important de traiter les erreurs ici
-                // au lieu d'utiliser un bloc catch(), pour ne pas passer à la trappe
-                // des exceptions provenant de réels bugs du composant.
-                (error) => {
-                    this.setState({
-                        isLoading : false,
-                        error
-                    });
-                }
-            )
-        fetch("http://192.168.1.22/tasks")
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    this.setState({
-                        tasks : result.items,
-                        isLoading : false
-                    });
-                },
-                // Remarque : il est important de traiter les erreurs ici
-                // au lieu d'utiliser un bloc catch(), pour ne pas passer à la trappe
-                // des exceptions provenant de réels bugs du composant.
-                (error) => {
-                    this.setState({
-                        isLoading : false,
-                        error
-                    });
-                }
-            )*/
+        const authProvider = CreateAuthProvider;
+        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZmlyc3RuYW1lIjoiQW50b2luZSIsImxhc3RuYW1lIjoiTGFtYmVydCIsImxvZ2luIjoiYW50LmxhbWIuYWxAZ21haWwuY29tIiwiaWRjbGFzcyI6MSwicm9sZSI6InRlYWNoZXIiLCJpYXQiOjE2MDgwMzU2NDAsImV4cCI6MTYwODAzNzQ0MH0.zRnXPRvL1g4IqnR8E0swAhMS1XCYQU-pfZE7urMaufs'
 
+        fetch(authProvider.fetchApiURl('/events'), {
+            method :'get',
+            headers : authProvider.fetchHeaders(),
+            mode: 'cors',
+        })
+            .then(response=> response.json())
+            .then((responseJson)=>{
+                responseJson?.forEach(item =>{
+                    item.icon = "fa fa-calendar";
+                    item.date = new Date(item.date);
+                });
+                return responseJson
+            })
+            .then((responseJson)=>{
+                this.setState({
+                    isLoading : false,
+                    events : responseJson
+                });
+            })
+        console.log(authProvider.fetchApiURl('/tasks'))
+        fetch(authProvider.fetchApiURl('/tasks'), {
+            method :'get',
+            headers: new Headers({
+                'Accept': '*/*',
+                'Content-Type': 'application/json',
+                'Authorization':'Bearer ' + token
+            }),
+            mode: 'cors',
+        })
+            .then(response=> response.json())
+            .then((responseJson)=>{
+                responseJson?.forEach(item =>{
+                    item.name = item.schoolsubject +" ("+ item.category +")";
+                    item.description = item.title;
+                    item.icon = "fa fa-check";
+                    item.date = new Date(item.date);
+                });
+                return responseJson;
+            })
+            .then((responseJson)=>{
+                responseJson?.forEach(item =>{
+                    item.name = item.schoolsubject +" ("+ item.category +")";
+                    item.description = item.title;
+                    item.icon = "fa fa-check";
+                    item.date = new Date(item.date);
+                });
+                this.setState({
+                    isLoading : false,
+                    tasks : responseJson
+                });
+            })
     }
 
     componentWillUnmount() {}
@@ -68,8 +84,7 @@ class List extends Component {
     }
     dataFormating(array,icon){
         array?.forEach(item =>{
-            item.icon = "fa fa-check";
-            item.date = new Date(item.date);
+
         });
     }
     handleSeeMore(){
@@ -81,10 +96,6 @@ class List extends Component {
         let tasks_data = this.state.tasks;
         let events_data = this.state.events;
 
-        // Formatage des données
-        this.dataFormating(tasks_data,"fa fa-check");
-        this.dataFormating(events_data,"fa fa-calendar");
-
         // marge les 2 listes et les trie par ordre chronologique
         let data = this.merge(tasks_data,events_data);
 
@@ -93,7 +104,7 @@ class List extends Component {
             return <Item
                 icon = {item.icon}
                 date = {item.date.toLocaleString('fr-FR', { day: '2-digit' })+ " " + item.date.toLocaleString('fr-FR', { month: 'short' })}
-                title = {item.title}
+                title = {item.name + " - " + item.description}
                 //link = {item.link}
             />;
         });
@@ -109,9 +120,9 @@ class List extends Component {
                         <p className="card-header-title">
                             {this.state.title} ({this.state.isLoading?"Loading":(this.state.events.length+this.state.tasks.length)})
                         </p>
-                        <a href="http://www.google.com"  className="card-header-icon" aria-label="more options">
+                        <a href="https://www.google.com"  className="card-header-icon" aria-label="more options">
                                         <span className="icon">
-                                            <a className="button is-small is-primary" href="http://www.google.com">
+                                            <a className="button is-small is-primary" href="https://www.google.com">
                                                 <i className="fa fa-plus"/>{/*todo*/}
                                             </a>
                                         </span>
@@ -128,9 +139,8 @@ class List extends Component {
                     </div>
 
                     <footer className="card-footer">
-                        <a className="card-footer-item" onClick={this.handleSeeMore}>{(this.state.size===1)?"Tout voir" : "Voir moins"}</a>
+                        <span className="card-footer-item"  onClick={this.handleSeeMore}>{(this.state.size===1)?"Tout voir" : "Voir moins"}</span>
                     </footer>
-
                 </div>
             </div>
         );
