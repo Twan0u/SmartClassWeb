@@ -18,36 +18,33 @@ class List extends Component {
     }
     componentDidMount() {
         const authProvider = CreateAuthProvider;
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZmlyc3RuYW1lIjoiQW50b2luZSIsImxhc3RuYW1lIjoiTGFtYmVydCIsImxvZ2luIjoiYW50LmxhbWIuYWxAZ21haWwuY29tIiwiaWRjbGFzcyI6MSwicm9sZSI6InRlYWNoZXIiLCJpYXQiOjE2MDgwMzU2NDAsImV4cCI6MTYwODAzNzQ0MH0.zRnXPRvL1g4IqnR8E0swAhMS1XCYQU-pfZE7urMaufs'
-
-        fetch(authProvider.fetchApiURl('/events'), {
-            method :'get',
-            headers : authProvider.fetchHeaders(),
-            mode: 'cors',
-        })
-            .then(response=> response.json())
-            .then((responseJson)=>{
-                responseJson?.forEach(item =>{
-                    item.icon = "fa fa-calendar";
-                    item.date = new Date(item.date);
-                });
-                return responseJson
+        Promise.all([
+            fetch(authProvider.fetchApiURl('/events'), {
+                method :'get',
+                headers : authProvider.fetchHeaders(),
+                mode: 'cors',
+            }),
+            fetch(authProvider.fetchApiURl('/tasks'), {
+                method :'get',
+                headers : authProvider.fetchHeaders(),
+                mode: 'cors',
             })
-            .then((responseJson)=>{
+        ])
+        .then(([res1, res2]) => Promise.all([res1.json(), res2.json()]))
+            .then(([res1, res2])=>{
                 this.setState({
                     isLoading : false,
-                    events : responseJson
+                    events : res1,
+                    tasks: res2
                 });
             })
-        console.log(authProvider.fetchApiURl('/tasks'))
-        fetch(authProvider.fetchApiURl('/tasks'), {
+            /*.catch(function(error) {
+                console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
+            });
+        /*fetch(authProvider.fetchApiURl('/tasks'), {
             method :'get',
-            headers: new Headers({
-                'Accept': '*/*',
-                'Content-Type': 'application/json',
-                'Authorization':'Bearer ' + token
-            }),
-            mode: 'cors',
+                headers : authProvider.fetchHeaders(),
+                mode: 'cors',
         })
             .then(response=> response.json())
             .then((responseJson)=>{
@@ -60,17 +57,21 @@ class List extends Component {
                 return responseJson;
             })
             .then((responseJson)=>{
-                responseJson?.forEach(item =>{
-                    item.name = item.schoolsubject +" ("+ item.category +")";
-                    item.description = item.title;
-                    item.icon = "fa fa-check";
-                    item.date = new Date(item.date);
-                });
                 this.setState({
                     isLoading : false,
                     tasks : responseJson
                 });
-            })
+            })*/
+        /*
+        * {res1?.forEach(item =>{
+                    item.icon = "fa fa-calendar";
+                    item.date = new Date(item.date);})},
+                res2?.forEach(item =>{
+                    item.name = item.schoolsubject +" ("+ item.category +")";
+                    item.description = item.title;
+                    item.icon = "fa fa-check";
+                    item.date = new Date(item.date);
+                })*/
     }
 
     componentWillUnmount() {}
@@ -95,6 +96,17 @@ class List extends Component {
     listItems(i){
         let tasks_data = this.state.tasks;
         let events_data = this.state.events;
+
+        events_data?.forEach(item =>{
+            item.icon = "fa fa-calendar";
+            item.date = new Date(item.date);
+        });
+        tasks_data?.forEach(item => {
+            item.name = item.schoolsubject + " (" + item.category + ")";
+            item.description = item.title;
+            item.icon = "fa fa-check";
+            item.date = new Date(item.date);
+        });
 
         // marge les 2 listes et les trie par ordre chronologique
         let data = this.merge(tasks_data,events_data);

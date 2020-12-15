@@ -15,7 +15,7 @@ let createTokenProvider = () => {
         return Date.now() > exp;
     };*/
 
-    const getToken = async () => {
+    const getToken = () => {
         /*if (!_token) {
             return null;
         }
@@ -23,7 +23,7 @@ let createTokenProvider = () => {
             return null;
         }
         return _token || _token.accessToken;*/
-        return 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZmlyc3RuYW1lIjoiQW50b2luZSIsImxhc3RuYW1lIjoiTGFtYmVydCIsImxvZ2luIjoiYW50LmxhbWIuYWxAZ21haWwuY29tIiwiaWRjbGFzcyI6MSwicm9sZSI6InRlYWNoZXIiLCJpYXQiOjE2MDgwMzU2NDAsImV4cCI6MTYwODAzNzQ0MH0.zRnXPRvL1g4IqnR8E0swAhMS1XCYQU-pfZE7urMaufs'
+        return 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZmlyc3RuYW1lIjoiQW50b2luZSIsImxhc3RuYW1lIjoiTGFtYmVydCIsImxvZ2luIjoiYW50LmxhbWIuYWxAZ21haWwuY29tIiwiaWRjbGFzcyI6MSwicm9sZSI6InRlYWNoZXIiLCJpYXQiOjE2MDgwNDQ2MDEsImV4cCI6MTYwODEzMTAwMX0.2OVEbjNDBwTkrl3upqF__sZrOCtoDEGBxHyD04zaN1I'
     };
     /*const isLoggedIn = () => {
         return !!_token;
