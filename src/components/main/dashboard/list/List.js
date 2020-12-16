@@ -63,13 +63,15 @@ class List extends Component {
         let events_data = this.state.events;
 
         events_data?.forEach(item =>{
-            item.icon = "fa fa-calendar";
+            item.isEvent = true;
+            //item.icon = "fa fa-calendar";
             item.date = new Date(item.date);
         });
         tasks_data?.forEach(item => {
+            item.isEvent = false;
             item.name = item.schoolsubject + " (" + item.category + ")";
             item.description = item.title;
-            item.icon = "fa fa-check";
+            //item.icon = "fa fa-check";
             item.date = new Date(item.date);
         });
 
@@ -79,10 +81,11 @@ class List extends Component {
        let items = data?.slice(0, i);
         items = items?.map(item =>{
             return <Item
-                icon = {item.icon}
+                //icon = {item.icon}
+                id = {item.id}
+                isEvent = {item.isEvent}
                 date = {item.date.toLocaleString('fr-FR', { day: '2-digit' })+ " " + item.date.toLocaleString('fr-FR', { month: 'short' })}
                 title = {item.name + " - " + item.description}
-                //link = {item.link}
             />;
         });
         return items;
@@ -122,7 +125,7 @@ class List extends Component {
                     </div>
 
                     <footer className="card-footer">
-                        <span className="card-footer-item"  onClick={this.handleSeeMore}>{(this.state.size===1)?"Tout voir" : "Voir moins"}</span>
+                        <a className="card-footer-item"  onClick={this.handleSeeMore}>{(this.state.size===1)?"Tout voir" : "Voir moins"}</a>
                     </footer>
                 </div>
             </div>

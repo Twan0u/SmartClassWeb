@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import CreateAuthProvider from '../../../../libraries/createAuthProvider'
+//import CreateAuthProvider from '../../../../libraries/createAuthProvider'
 
 class Item extends Component{
     constructor(props) {
@@ -14,7 +14,7 @@ class Item extends Component{
 
     deleteData() {
         console.log("ola");
-        const authProvider = CreateAuthProvider;
+        //const authProvider = CreateAuthProvider;
         /*let path;
         if(this.state.isEvent){
             path='/events';
@@ -22,12 +22,12 @@ class Item extends Component{
             path='/tasks';
         }
         path+='/'+this.state.id;*/
-        fetch(authProvider.fetchApiURl('/tasks/1'), {
+        /*fetch(authProvider.fetchApiURl('/tasks/1'), {
             method :'delete',
             headers : authProvider.fetchHeaders(),
             mode: 'cors',
         })
-            .then(response => response.json());
+            .then(response => response.json());*/
     }
 
     render() {

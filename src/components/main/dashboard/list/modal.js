@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import CreateAuthProvider from '../../../../libraries/createAuthProvider'
 
 class Modal extends Component {
-    /*constructor(props) {
+    constructor(props) {
         super(props);
         this.state = {
             title : "",
@@ -31,9 +31,9 @@ class Modal extends Component {
                 "name" : this.state.title,
                 "description" : this.state.description,
                 "date" : this.state.date
-                })
+            })
         })
-            .then((response)=>{
+            .then(()=>{
                 this.setState({
                     title : "",
                     description: "",
@@ -82,7 +82,7 @@ class Modal extends Component {
                 </div>
             </div>
         );
-    }*/
+    }
 }
 
 export default Modal
