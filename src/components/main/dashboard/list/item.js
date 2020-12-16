@@ -16,8 +16,11 @@ class Item extends Component{
             <tr>
                 <td width="5%"><i className={this.state.icon}></i></td>
                 <td>{this.state.date} : {this.state.title}</td>
-                <td className="level-right"><a className="button is-small is-info" href={this.state.link}><i
-                    className="fa fa-chevron-right"></i></a></td>
+                <td className="level-right">
+                    <a className="button is-small is-info" href={this.state.link}><i className="fa fa-pencil"></i></a>
+                    &nbsp;&nbsp;&nbsp;
+                    <a className="button is-small is-info has-background-danger" href={this.state.link}><i className="fa fa-trash"></i></a>
+                </td>
             </tr>
         );
     }
