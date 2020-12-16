@@ -1,5 +1,6 @@
 import React, {Component} from "react"
 import Individual from "./Individual";
+
 import CreateAuthProvider from "../../../../libraries/createAuthProvider";
 
 class Bubble extends Component{

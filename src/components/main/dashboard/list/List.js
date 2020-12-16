@@ -32,47 +32,16 @@ class List extends Component {
             })
         ])
         .then(([res1, res2]) => Promise.all([res1.json(), res2.json()]))
-            .then(([res1, res2])=>{
-                this.setState({
-                    isLoading : false,
-                    events : res1,
-                    tasks: res2
-                });
-            })
-            /*.catch(function(error) {
-                console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
+        .then(([res1, res2])=>{
+            this.setState({
+                isLoading : false,
+                events : res1,
+                tasks: res2
             });
-        /*fetch(authProvider.fetchApiURl('/tasks'), {
-            method :'get',
-                headers : authProvider.fetchHeaders(),
-                mode: 'cors',
         })
-            .then(response=> response.json())
-            .then((responseJson)=>{
-                responseJson?.forEach(item =>{
-                    item.name = item.schoolsubject +" ("+ item.category +")";
-                    item.description = item.title;
-                    item.icon = "fa fa-check";
-                    item.date = new Date(item.date);
-                });
-                return responseJson;
-            })
-            .then((responseJson)=>{
-                this.setState({
-                    isLoading : false,
-                    tasks : responseJson
-                });
-            })*/
-        /*
-        * {res1?.forEach(item =>{
-                    item.icon = "fa fa-calendar";
-                    item.date = new Date(item.date);})},
-                res2?.forEach(item =>{
-                    item.name = item.schoolsubject +" ("+ item.category +")";
-                    item.description = item.title;
-                    item.icon = "fa fa-check";
-                    item.date = new Date(item.date);
-                })*/
+        .catch(function(error) {
+            console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
+        });
     }
 
     componentWillUnmount() {}
@@ -83,11 +52,6 @@ class List extends Component {
             return new Date(a.date) - new Date(b.date);
         });
         return data;
-    }
-    dataFormating(array,icon){
-        array?.forEach(item =>{
-
-        });
     }
     handleSeeMore(){
         let newSize = (this.state.size===1)?(this.state.tasks.length+this.state.events.length):1;
