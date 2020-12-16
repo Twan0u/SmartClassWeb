@@ -28,7 +28,8 @@ class Login extends Component {
         })
             .then((response) => response.json())
             .then((responseJson)=>{
-                authProvider.login(responseJson)
+                authProvider.login(responseJson);
+                this.props.update();
             })
             .catch(function(error) {
                 console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);

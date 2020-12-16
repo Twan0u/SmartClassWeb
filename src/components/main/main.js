@@ -6,14 +6,19 @@ import CreateTokenProvider from "../../libraries/createTokenProvider";
 
 
 class Main extends Component {
+    constructor(props) {
+        super(props);
+    }
     isLoggedIn(){
         return CreateTokenProvider().isLoggedIn();
     }
+    update = () =>{
+        this.props.update();
+    }
     render(){
-
         return (
             <div>
-                {this.isLoggedIn()?<Dashboard/>:<Login/>}
+                {this.isLoggedIn()?<Dashboard />:<Login update={this.update}/>}
             </div>
         );
     }

@@ -6,6 +6,7 @@ class Navigation extends Component {
     logout = ()=>{
         const authProvider = CreateAuthProvider;
         authProvider.logout();
+        this.props.update();
     }
     render(){
         return (
