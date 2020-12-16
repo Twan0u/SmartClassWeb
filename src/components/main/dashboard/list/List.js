@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import Item from "./item";
-/*import Modal from "./modal*/
+import Modal from './modal'
 import CreateAuthProvider from '../../../../libraries/createAuthProvider'
 
 class List extends Component {
@@ -12,6 +12,7 @@ class List extends Component {
             title       : props.title,     //title of the list component
             tasks       : [],
             events      : [],
+            modalvisible: false
         };
 
         this.handleSeeMore = this.handleSeeMore.bind(this);
@@ -87,22 +88,28 @@ class List extends Component {
         return items;
     }
 
+    handleShowModal = ()=>{
+        console.log(this.state.modalvisible)
+        if(this.state.modalvisible){this.setState({modalvisible:false})}
+        else{this.setState({modalvisible:true})}
+    }
+
     render() {
         return (
-            <div >
-                {/*modal*/}
+            <div>
+                <Modal visibility={this.state.modalvisible} handleVisibility={this.handleShowModal}/>
                 <div className="card">
                     <header className="card-header">
                         <p className="card-header-title">
                             {this.state.title} ({this.state.isLoading?"Loading":(this.state.events.length+this.state.tasks.length)})
                         </p>
-                        <a href="https://www.google.com"  className="card-header-icon" aria-label="more options">
+                        <span   className="card-header-icon" aria-label="more options">
                                         <span className="icon">
-                                            <a className="button is-small is-primary" href="https://www.google.com">
-                                                <i className="fa fa-plus"/>{/*todo*/}
-                                            </a>
+                                            <span className="button is-small is-primary" onClick={this.handleShowModal}>
+                                                <i className="fa fa-plus"/>
+                                            </span>
                                         </span>
-                        </a>
+                        </span>
                     </header>
                     <div className="card-table">
                         <div className="content">
