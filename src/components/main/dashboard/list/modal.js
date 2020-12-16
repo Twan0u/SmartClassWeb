@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 
 class Modal extends Component {
-    constructor(props) {
+    /*constructor(props) {
         super(props);
         this.state = {
             text : props.text,
@@ -22,7 +22,7 @@ class Modal extends Component {
                 {this.state.text}
             </div>
         );
-    }
+    }*/
 }
 
 export default Modal
