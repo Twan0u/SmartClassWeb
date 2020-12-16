@@ -1,5 +1,5 @@
 export const data = () => {
-    const url = ()=>{return 'http://192.168.1.22:4000'};
+    const url = ()=>{return 'http://twan0u.ddns.net:4000'};
     return {
         url
     }
