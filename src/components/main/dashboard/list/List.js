@@ -1,7 +1,6 @@
 import React, { Component } from "react"
 import Item from "./item";
-//
-// import Modal from "./modal";
+import Modal from './modal'
 import CreateAuthProvider from '../../../../libraries/createAuthProvider'
 
 class List extends Component {
@@ -13,6 +12,7 @@ class List extends Component {
             title       : props.title,     //title of the list component
             tasks       : [],
             events      : [],
+            modalvisible: false
         };
 
         this.handleSeeMore = this.handleSeeMore.bind(this);
@@ -63,13 +63,13 @@ class List extends Component {
         let events_data = this.state.events;
 
         events_data?.forEach(item =>{
-            item.isEvent =true;
+            item.icon = "fa fa-calendar";
             item.date = new Date(item.date);
         });
         tasks_data?.forEach(item => {
-            item.name = item.schoolsubject+ " (" + item.category + ")";
+            item.name = item.schoolsubject + " (" + item.category + ")";
             item.description = item.title;
-            item.isEvent=false;
+            item.icon = "fa fa-check";
             item.date = new Date(item.date);
         });
 
@@ -79,31 +79,37 @@ class List extends Component {
        let items = data?.slice(0, i);
         items = items?.map(item =>{
             return <Item
-                id = {item.id}
-                isEvent = {item.isEvent}
+                icon = {item.icon}
                 date = {item.date.toLocaleString('fr-FR', { day: '2-digit' })+ " " + item.date.toLocaleString('fr-FR', { month: 'short' })}
                 title = {item.name + " - " + item.description}
+                //link = {item.link}
             />;
         });
         return items;
     }
 
+    handleShowModal = ()=>{
+        console.log(this.state.modalvisible)
+        if(this.state.modalvisible){this.setState({modalvisible:false})}
+        else{this.setState({modalvisible:true})}
+    }
+
     render() {
         return (
-            <div >
-                {/*modal*/}
+            <div>
+                <Modal visibility={this.state.modalvisible} handleVisibility={this.handleShowModal}/>
                 <div className="card">
                     <header className="card-header">
                         <p className="card-header-title">
                             {this.state.title} ({this.state.isLoading?"Loading":(this.state.events.length+this.state.tasks.length)})
                         </p>
-                        <a href="https://www.google.com"  className="card-header-icon" aria-label="more options">
+                        <span   className="card-header-icon" aria-label="more options">
                                         <span className="icon">
-                                            <a className="button is-small is-primary" href="https://www.google.com">
-                                                <i className="fa fa-plus"/>{/*todo*/}
-                                            </a>
+                                            <span className="button is-small is-primary" onClick={this.handleShowModal}>
+                                                <i className="fa fa-plus"/>
+                                            </span>
                                         </span>
-                        </a>
+                        </span>
                     </header>
                     <div className="card-table">
                         <div className="content">
@@ -116,7 +122,7 @@ class List extends Component {
                     </div>
 
                     <footer className="card-footer">
-                        <a className="card-footer-item"  onClick={this.handleSeeMore}>{(this.state.size===1)?"Tout voir" : "Voir moins"}</a>
+                        <span className="card-footer-item"  onClick={this.handleSeeMore}>{(this.state.size===1)?"Tout voir" : "Voir moins"}</span>
                     </footer>
                 </div>
             </div>
