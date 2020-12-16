@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import User from "./user";
+import CreateAuthProvider from "../../../../libraries/createAuthProvider";
 
 class SearchBar extends Component {
     constructor(props) {
@@ -21,34 +22,30 @@ class SearchBar extends Component {
 
     componentDidMount() {
         this.setState({isLoading : true});
+        let authProvider = CreateAuthProvider;
 
-        //simule un appel à une api
-        let students = [//todo
-            {
-                name : "Antoine",
-            },
-            {
-                name : "ant",
-            },
-            {
-                name : "anémonne",
-            },
-            {
-                name : "josh",
-            },
-            {
-                name : "joshua",
-            },
-            {
-                name : "john",
-            },
-        ];
+            fetch(authProvider.fetchApiURl('/class/pupils'), {
+                method :'get',
+                headers : authProvider.fetchHeaders(),
+                mode: 'cors',
+            })
+            .then((response) => response.json())
+            .then((responseJson)=>{
+                this.setState({
+                    isLoading : false,
+                    data : responseJson
+                });
+            })
+            .catch(function(error) {
+                console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
+            });
+            console.log(this.state.data);
 
-        this.setState({isLoading : false, data : students});
     }
+
     handleSearch(event){
         this.setState({isLoading : true});
-        let data = this.state.data.filter(student => student.name.toLowerCase().includes(event.target.value.toLowerCase()))
+        let data = this.state.data.filter(student => (student.firstname + " " + student.lastname).toLowerCase().includes(event.target.value.toLowerCase()))
         this.setState({input : event.target.value, filteredData: data, isLoading : false})
         console.log(event.target.value);
     }
@@ -58,7 +55,7 @@ class SearchBar extends Component {
             return "";
         }else{
             return this.state.filteredData?.map(user =>{
-                return (<User name = {user.name} />);
+                return (<User name = {user.firstname + " " +user.lastname } />);
             });
         }
     }
