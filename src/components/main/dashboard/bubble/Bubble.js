@@ -15,7 +15,7 @@ function Bubble(props){
                     subtitle = "Interrogations non signées"
                 />
                 <Individual
-                    title = "69"
+                    title = "3"
                     apiCall = ""
                     subtitle = "Evénements à venir"
                 />

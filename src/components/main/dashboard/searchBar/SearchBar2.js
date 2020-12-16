@@ -19,7 +19,7 @@ class SearchBar extends Component {
         return "";
     }*/
 
-    componentDidMount() {//todo remove async
+    componentDidMount() {
         this.setState({isLoading : true});
 
         //simule un appel à une api

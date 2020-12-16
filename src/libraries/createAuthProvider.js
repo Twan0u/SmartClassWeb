@@ -10,7 +10,7 @@ export const createAuthProvider = () => {
     };
 
     const logout = () => {
-        tokenProvider.setToken(null);
+        tokenProvider.setToken(false);
     };
 
     const fetchHeaders = () => {
