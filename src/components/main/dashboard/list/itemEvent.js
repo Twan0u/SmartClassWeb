@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import CreateAuthProvider from '../../../../libraries/createAuthProvider'
-import Modal from "./modal";
+import ModalEvent from "./modalEvent";
 
-class Item extends Component{
+class ItemEvent extends Component{
     constructor(props) {
         super(props);
         this.state = {
@@ -36,9 +36,9 @@ class Item extends Component{
     render() {
         return (
             <tr>
-                <Modal isUpdate={true} id = {this.state.id} name={this.state.name} description={this.state.description} date={this.state.date} visibility={this.state.modalVisible} handleVisibility={this.handleShowModal}/>
+                <ModalEvent isUpdate={true} id = {this.state.id} name={this.state.name} description={this.state.description} date={this.state.date} visibility={this.state.modalVisible} handleVisibility={this.handleShowModal}/>
                 <td width="5%"><i className="fa fa-calendar"/></td>
-                <td>{this.state.date} : {this.state.name +" - "+this.state.description}</td>
+                <td>{this.state.date.toLocaleString('fr-FR', {day: '2-digit'}) + " " + this.state.date.toLocaleString('fr-FR', {month: 'short'})} : {this.state.name +" - "+this.state.description}</td>
                 <td className="level-right">
                     <a className="button is-small is-info" onClick={this.handleShowModal} ><i className="fa fa-pencil"/></a>
                     &nbsp;&nbsp;&nbsp;
@@ -49,4 +49,4 @@ class Item extends Component{
     }
 }
 
-export default Item;
+export default ItemEvent;

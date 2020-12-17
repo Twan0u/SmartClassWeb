@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import Hero from "./hero/BigHero";
 import Bubble from "./bubble/Bubble";
 import SearchBar from "./searchBar/SearchBar2";
-import List from "./list/List";
+import List from "./list/list";
 
 class Dashboard extends Component {
     render(){

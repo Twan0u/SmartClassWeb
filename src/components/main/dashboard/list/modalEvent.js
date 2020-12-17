@@ -1,7 +1,8 @@
 import React, { Component } from "react"
 import CreateAuthProvider from '../../../../libraries/createAuthProvider'
+import formatDate from '../../../../format/format'
 
-class Modal extends Component {
+class ModalEvent extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -9,7 +10,7 @@ class Modal extends Component {
             id : props.id,
             name : props.name,
             description: props.description,
-            date : props.date,
+            date : (props.isUpdate)?formatDate(props.date):formatDate(new Date()),
         };
         this.handleDelete = this.handleDelete.bind(this);
         this.handleSave = this.handleSave.bind(this);
@@ -20,14 +21,12 @@ class Modal extends Component {
         this.props.delete();
     }
     validateForm() {
-        return this.state.name?.length > 0 && this.state.description?.length > 0 && this.state.date?.length > 0;
+        return this.state.name?.length > 0 && this.state.date?.length > 0;
     }
     handleSave(){
         let authProvider = CreateAuthProvider;
         if(this.state.isUpdate){
-            console.log("maj");
-            //check le path
-            /*fetch(authProvider.fetchApiURl('/events/'+this.state.id+'/update'), {
+            fetch(authProvider.fetchApiURl('/events/'+this.state.id+'/update'), {
                 method: 'post',
                 headers: authProvider.fetchHeaders(),
                 mode: 'cors',
@@ -46,11 +45,10 @@ class Modal extends Component {
                 })
                 .catch(function (error) {
                     console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
-                });*/
+                });
         }
         else {
-            console.log("add");
-            /*fetch(authProvider.fetchApiURl('/events'), {
+            fetch(authProvider.fetchApiURl('/events'), {
                 method: 'post',
                 headers: authProvider.fetchHeaders(),
                 mode: 'cors',
@@ -69,7 +67,8 @@ class Modal extends Component {
                 })
                 .catch(function (error) {
                     console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
-                });*/
+                });
+            //<input className="input" type="text" placeholder="2020-12-17" onChange={(e) => this.setState({date: e.target.value})} value={this.state.date}/>
         }
     }
 
@@ -99,7 +98,7 @@ class Modal extends Component {
                         <div className="field">
                             <label className="label">Date</label>
                             <div className="control">
-                                <input className="input" type="text" placeholder="2020-12-17" onChange={(e) => this.setState({date: e.target.value})} value={this.state.date}/>
+                                <input className="input" type="date" onChange={(e) => this.setState({date: e.target.value})} value={this.state.date} min={formatDate(new Date())} />
                             </div>
                         </div>
 
@@ -113,4 +112,4 @@ class Modal extends Component {
     }
 }
 
-export default Modal
+export default ModalEvent

@@ -1,6 +1,6 @@
 import React, {Component} from "react"
-import Item from "./item";
-import Modal from './modal'
+import ItemEvent from "./itemEvent";
+import ModalEvent from './modalEvent'
 import ModalTask from './modalTask'
 import CreateAuthProvider from '../../../../libraries/createAuthProvider'
 import ItemTask from "./itemTask";
@@ -83,11 +83,12 @@ class List extends Component {
         let items = data?.slice(0, i);
         items = items?.map(item => {
             return (item.isEvent)?
-                <Item
+                <ItemEvent
                     id={item.id}
                     name={item.name}
                     description={item.description}
-                    date={item.date.toLocaleString('fr-FR', {day: '2-digit'}) + " " + item.date.toLocaleString('fr-FR', {month: 'short'})}
+                    date={item.date}
+                    //date={item.date.toLocaleString('fr-FR', {day: '2-digit'}) + " " + item.date.toLocaleString('fr-FR', {month: 'short'})}
                     />
                 :
                 <ItemTask
@@ -96,7 +97,8 @@ class List extends Component {
                     type={item.type}
                     schoolSubject={item.schoolsubject}
                     category={item.category}
-                    date={item.date.toLocaleString('fr-FR', {day: '2-digit'}) + " " + item.date.toLocaleString('fr-FR', {month: 'short'})}
+                    date={item.date}
+                    //date={item.date.toLocaleString('fr-FR', {day: '2-digit'}) + " " + item.date.toLocaleString('fr-FR', {month: 'short'})}
                     />
                 ;
         });
@@ -122,7 +124,7 @@ class List extends Component {
     render() {
         return (
             <div>
-                <Modal isUpdate={false} visibility={this.state.modalvisible} handleVisibility={this.handleShowModal}/>
+                <ModalEvent isUpdate={false} visibility={this.state.modalvisible} handleVisibility={this.handleShowModal}/>
                 <ModalTask  isUpdate={false} visibility={this.state.modalTaskVisible} handleVisibility={this.handleShowModalTask}/>
                 <div className="card">
                     <header className="card-header">

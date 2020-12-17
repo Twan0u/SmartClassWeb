@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import CreateAuthProvider from '../../../../libraries/createAuthProvider'
+import formatDate from '../../../../format/format'
 
 class ModalTask extends Component {
     constructor(props) {
@@ -9,8 +10,8 @@ class ModalTask extends Component {
             id : props.id,
             title : props.title,
             type: props.type,
-            schoolSubject:props.schoolSubject,
-            date : props.date,
+            category:props.category,
+            date : (props.isUpdate)?formatDate(props.date):formatDate(new Date()),
         };
         this.handleDelete = this.handleDelete.bind(this);
         this.handleSave = this.handleSave.bind(this);
@@ -21,13 +22,12 @@ class ModalTask extends Component {
         this.props.delete();
     }
     validateForm() {
-        return this.state.title?.length > 0  && this.state.date?.length > 0  && this.state.schoolSubject?.length > 0 ;
+        return this.state.title?.length > 0  && this.state.date?.length > 0  && this.state.category?.length > 0 ;
     }
     handleSave(){
         let authProvider = CreateAuthProvider;
         if(this.state.isUpdate){
-            console.log("maj");
-            /*fetch(authProvider.fetchApiURl('/tasks/'+this.state.id+'/update'), {
+            fetch(authProvider.fetchApiURl('/tasks/'+this.state.id+'/update'), {
                 method :'post',
                 headers : authProvider.fetchHeaders(),
                 mode: 'cors',
@@ -43,16 +43,15 @@ class ModalTask extends Component {
                     this.setState({
                         title : "",
                         type: "",
-                        schoolSubject:"",
+                        category:"",
                         date : ""
                     });
                 })
                 .catch(function(error) {
                     console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
-                });*/
+                });
         }else {
-            console.log("add");
-            /*fetch(authProvider.fetchApiURl('/tasks'), {
+            fetch(authProvider.fetchApiURl('/tasks'), {
                 method: 'post',
                 headers: authProvider.fetchHeaders(),
                 mode: 'cors',
@@ -67,16 +66,21 @@ class ModalTask extends Component {
                     this.setState({
                         title: "",
                         type: "",
-                        schoolSubject: "",
+                        category: "",
                         date: ""
                     });
                 })
                 .catch(function (error) {
                     console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
-                });*/
+                });
         }
     }
-
+/*<div className="field">
+<label className="label">Type</label>
+<div className="control">
+<input className="input" type="text" placeholder="Devoir/Leçon" onChange={(e) => this.setState({type : e.target.value})} value={this.state.type}/>
+</div>
+</div>*/
     render() {
         return (
             <div className={this.props.visibility?'modal is-active':'modal'}>
@@ -94,21 +98,17 @@ class ModalTask extends Component {
                             </div>
                         </div>
                         <div className="field">
-                            <label className="label">Type</label>
-                            <div className="control">
-                                <input className="input" type="text" placeholder="Devoir/Leçon" onChange={(e) => this.setState({type : e.target.value})} value={this.state.type}/>
-                            </div>
                         </div>
                         <div className="field">
                             <label className="label">Matière</label>
                             <div className="control">
-                                <input className="input" type="text" placeholder="Français" onChange={(e) => this.setState({schoolSubject : e.target.value})} value={this.state.schoolSubject}/>
+                                <input className="input" type="text" placeholder="Grammaire" onChange={(e) => this.setState({category : e.target.value})} value={this.state.category}/>
                             </div>
                         </div>
                         <div className="field">
                             <label className="label">Date</label>
                             <div className="control">
-                                <input className="input" type="text" placeholder="2020-12-17" onChange={(e) => this.setState({date : e.target.value})} value={this.state.date}/>
+                                <input className="input" type="date" onChange={(e) => this.setState({date: e.target.value})} value={this.state.date} min={formatDate(new Date())} />
                             </div>
                         </div>
 

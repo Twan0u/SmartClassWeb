@@ -38,9 +38,9 @@ class ItemTask extends Component{
     render() {
         return (
             <tr>
-                <ModalTask isUpdate={true} id={this.state.id} title={this.state.title} type={this.state.type} schoolSubject={this.state.schoolSubject} date={this.state.date} visibility={this.state.modalVisible} handleVisibility={this.handleShowModal}/>
+                <ModalTask isUpdate={true} id={this.state.id} title={this.state.title} type={this.state.type} category={this.state.category} date={this.state.date} visibility={this.state.modalVisible} handleVisibility={this.handleShowModal}/>
                 <td width="5%"><i className="fa fa-check"/></td>
-                <td>{this.state.date} : {this.state.schoolSubject+" ("+this.state.category+") - "+this.state.title}</td>
+                <td>{this.state.date.toLocaleString('fr-FR', {day: '2-digit'}) + " " + this.state.date.toLocaleString('fr-FR', {month: 'short'})} : {this.state.schoolSubject+" ("+this.state.category+") - "+this.state.title}</td>
                 <td className="level-right">
                     <a className="button is-small is-info" onClick={this.handleShowModal} ><i className="fa fa-pencil"/></a>
                     &nbsp;&nbsp;&nbsp;
