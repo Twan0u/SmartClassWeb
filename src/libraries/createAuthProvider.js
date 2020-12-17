@@ -17,6 +17,7 @@ export const createAuthProvider = () => {
         const token =  'Bearer ' + tokenProvider.getToken();
         return new Headers({
             'Accept': '*/*',
+            //'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, DELETE',
             'Content-Type': 'application/json',
             'Authorization': token,
         })

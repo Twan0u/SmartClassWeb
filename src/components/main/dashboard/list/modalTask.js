@@ -1,12 +1,13 @@
 import React, { Component } from "react"
 import CreateAuthProvider from '../../../../libraries/createAuthProvider'
 
-class Modal extends Component {
+class ModalTask extends Component {
     constructor(props) {
         super(props);
         this.state = {
             title : "",
-            description: "",
+            type: "",
+            schoolSubject:1,
             date : "",
         };
         this.handleDelete = this.handleDelete.bind(this);
@@ -18,25 +19,27 @@ class Modal extends Component {
         this.props.delete();
     }
     validateForm() {
-        return this.state.title.length > 0 && this.state.description.length > 0 && this.state.date.length > 0;
+        return this.state.title.length > 0  && this.state.date.length > 0  && this.state.schoolSubject.length > 0 ;
     }
     handleSave(){
         let authProvider = CreateAuthProvider;
-        console.log('sauvegarde de : ' + this.state.date + ' ' + this.state.title + " " + this.state.description)
-        fetch(authProvider.fetchApiURl('/events'), {
+        console.log('sauvegarde de : ' + this.state.date + ' ' + this.state.title + " " + this.state.type+" "+this.state.schoolSubject)
+        fetch(authProvider.fetchApiURl('/tasks'), {
             method :'post',
             headers : authProvider.fetchHeaders(),
             mode: 'cors',
             body : JSON.stringify({
-                "name" : this.state.title,
-                "description" : this.state.description,
+                "title" : this.state.title,
+                "type" : this.state.type,
+                "idSchoolSubjectSubCategory" : 1,
                 "date" : this.state.date
             })
         })
             .then(()=>{
                 this.setState({
                     title : "",
-                    description: "",
+                    type: "",
+                    schoolSubject:"",
                     date : ""
                 });
             })
@@ -51,20 +54,26 @@ class Modal extends Component {
                 <div className="modal-background"/>
                 <div className="modal-card">
                     <header className="modal-card-head">
-                        <p className="modal-card-title">Ajout d'un événement</p>
+                        <p className="modal-card-title">Ajout d'une tâche</p>
                         <button className="delete" aria-label="close" onClick={this.props.handleVisibility}/>
                     </header>
                     <section className="modal-card-body">
                         <div className="field">
                             <label className="label">Titre</label>
                             <div className="control">
-                                <input className="input" type="text" placeholder="Visite au musée" onChange={(e) => this.setState({title : e.target.value})}/>
+                                <input className="input" type="text" placeholder="Lire le livre" onChange={(e) => this.setState({title : e.target.value})}/>
                             </div>
                         </div>
                         <div className="field">
-                            <label className="label">Description</label>
+                            <label className="label">Type</label>
                             <div className="control">
-                                <input className="input" type="text" placeholder="Ne pas oublier l'argent et son masque" onChange={(e) => this.setState({description : e.target.value})}/>
+                                <input className="input" type="text" placeholder="Devoir/Leçon" onChange={(e) => this.setState({type : e.target.value})}/>
+                            </div>
+                        </div>
+                        <div className="field">
+                            <label className="label">Matière</label>
+                            <div className="control">
+                                <input className="input" type="text" placeholder="Français" onChange={(e) => this.setState({schoolSubject : e.target.value})}/>
                             </div>
                         </div>
                         <div className="field">
@@ -84,4 +93,4 @@ class Modal extends Component {
     }
 }
 
-export default Modal
+export default ModalTask
