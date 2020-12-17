@@ -5,9 +5,11 @@ class Modal extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            title : "",
-            description: "",
-            date : "",
+            isUpdate : props.isUpdate,
+            id : props.id,
+            name : props.name,
+            description: props.description,
+            date : props.date,
         };
         this.handleDelete = this.handleDelete.bind(this);
         this.handleSave = this.handleSave.bind(this);
@@ -18,35 +20,62 @@ class Modal extends Component {
         this.props.delete();
     }
     validateForm() {
-        return this.state.title.length > 0 && this.state.description.length > 0 && this.state.date.length > 0;
+        return this.state.name?.length > 0 && this.state.description?.length > 0 && this.state.date?.length > 0;
     }
     handleSave(){
         let authProvider = CreateAuthProvider;
-        console.log('sauvegarde de : ' + this.state.date + ' ' + this.state.title + " " + this.state.description)
-        fetch(authProvider.fetchApiURl('/events'), {
-            method :'post',
-            headers : authProvider.fetchHeaders(),
-            mode: 'cors',
-            body : JSON.stringify({
-                "name" : this.state.title,
-                "description" : this.state.description,
-                "date" : this.state.date
+        if(this.state.isUpdate){
+            console.log("maj");
+            //check le path
+            /*fetch(authProvider.fetchApiURl('/events/'+this.state.id+'/update'), {
+                method: 'post',
+                headers: authProvider.fetchHeaders(),
+                mode: 'cors',
+                body: JSON.stringify({
+                    "name": this.state.name,
+                    "description": this.state.description,
+                    "date": this.state.date
+                })
             })
-        })
-            .then(()=>{
-                this.setState({
-                    title : "",
-                    description: "",
-                    date : ""
-                });
+                .then(() => {
+                    this.setState({
+                        name: "",
+                        description: "",
+                        date: ""
+                    });
+                })
+                .catch(function (error) {
+                    console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
+                });*/
+        }
+        else {
+            console.log("add");
+            /*fetch(authProvider.fetchApiURl('/events'), {
+                method: 'post',
+                headers: authProvider.fetchHeaders(),
+                mode: 'cors',
+                body: JSON.stringify({
+                    "name": this.state.name,
+                    "description": this.state.description,
+                    "date": this.state.date
+                })
             })
-            .catch(function(error) {
-                console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
-            });
+                .then(() => {
+                    this.setState({
+                        name: "",
+                        description: "",
+                        date: ""
+                    });
+                })
+                .catch(function (error) {
+                    console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
+                });*/
+        }
     }
 
     render() {
         return (
+
             <div className={this.props.visibility?'modal is-active':'modal'}>
                 <div className="modal-background"/>
                 <div className="modal-card">
@@ -58,19 +87,19 @@ class Modal extends Component {
                         <div className="field">
                             <label className="label">Titre</label>
                             <div className="control">
-                                <input className="input" type="text" placeholder="Visite au musée" onChange={(e) => this.setState({title : e.target.value})}/>
+                                <input className="input" type="text" placeholder="Visite au musée" onChange={(e) => this.setState({name: e.target.value})} value={this.state.name}/>
                             </div>
                         </div>
                         <div className="field">
                             <label className="label">Description</label>
                             <div className="control">
-                                <input className="input" type="text" placeholder="Ne pas oublier l'argent et son masque" onChange={(e) => this.setState({description : e.target.value})}/>
+                                <input className="input" type="text" placeholder="Ne pas oublier l'argent et son masque" onChange={(e) => this.setState({description: e.target.value})} value={this.state.description}/>
                             </div>
                         </div>
                         <div className="field">
                             <label className="label">Date</label>
                             <div className="control">
-                                <input className="input" type="text" placeholder="2020-12-17" onChange={(e) => this.setState({date : e.target.value})}/>
+                                <input className="input" type="text" placeholder="2020-12-17" onChange={(e) => this.setState({date: e.target.value})} value={this.state.date}/>
                             </div>
                         </div>
 

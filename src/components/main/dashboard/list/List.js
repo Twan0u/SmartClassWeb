@@ -3,13 +3,14 @@ import Item from "./item";
 import Modal from './modal'
 import ModalTask from './modalTask'
 import CreateAuthProvider from '../../../../libraries/createAuthProvider'
+import ItemTask from "./itemTask";
 
 class List extends Component {
     constructor(props) {
         super(props);
         this.state = {
             isLoading: true,
-            size: 1,               //number of items to show when not see all
+            size: 5,               //number of items to show when not see all
             title: props.title,     //title of the list component
             tasks: [],
             events: [],
@@ -59,7 +60,7 @@ class List extends Component {
     }
 
     handleSeeMore() {
-        let newSize = (this.state.size === 1) ? (this.state.tasks.length + this.state.events.length) : 1;
+        let newSize = (this.state.size === 5) ? (this.state.tasks.length + this.state.events.length) : 5;
         this.setState({size: newSize});
     }
 
@@ -69,29 +70,35 @@ class List extends Component {
 
         events_data?.forEach(item => {
             item.isEvent = true;
-            //item.icon = "fa fa-calendar";
             item.date = new Date(item.date);
         });
         tasks_data?.forEach(item => {
             item.isEvent = false;
-            item.name = item.schoolsubject + " (" + item.category + ")";
-            item.description = item.title;
-            //item.icon = "fa fa-check";
             item.date = new Date(item.date);
         });
 
-        // marge les 2 listes et les trie par ordre chronologique
+        // merge les 2 listes et les trie par ordre chronologique
         let data = this.merge(tasks_data, events_data);
 
         let items = data?.slice(0, i);
         items = items?.map(item => {
-            return <Item
-                //icon = {item.icon}
-                id={item.id}
-                isEvent={item.isEvent}
-                date={item.date.toLocaleString('fr-FR', {day: '2-digit'}) + " " + item.date.toLocaleString('fr-FR', {month: 'short'})}
-                title={item.name + " - " + item.description}
-            />;
+            return (item.isEvent)?
+                <Item
+                    id={item.id}
+                    name={item.name}
+                    description={item.description}
+                    date={item.date.toLocaleString('fr-FR', {day: '2-digit'}) + " " + item.date.toLocaleString('fr-FR', {month: 'short'})}
+                    />
+                :
+                <ItemTask
+                    id={item.id}
+                    title={item.title}
+                    type={item.type}
+                    schoolSubject={item.schoolsubject}
+                    category={item.category}
+                    date={item.date.toLocaleString('fr-FR', {day: '2-digit'}) + " " + item.date.toLocaleString('fr-FR', {month: 'short'})}
+                    />
+                ;
         });
         return items;
     }
@@ -115,8 +122,8 @@ class List extends Component {
     render() {
         return (
             <div>
-                <Modal visibility={this.state.modalvisible} handleVisibility={this.handleShowModal}/>
-                <ModalTask visibility={this.state.modalTaskVisible} handleVisibility={this.handleShowModalTask}/>
+                <Modal isUpdate={false} visibility={this.state.modalvisible} handleVisibility={this.handleShowModal}/>
+                <ModalTask  isUpdate={false} visibility={this.state.modalTaskVisible} handleVisibility={this.handleShowModalTask}/>
                 <div className="card">
                     <header className="card-header">
                         <p className="card-header-title">
@@ -141,7 +148,7 @@ class List extends Component {
 
                     <footer className="card-footer">
                         <a className="card-footer-item"
-                           onClick={this.handleSeeMore}>{(this.state.size === 1) ? "Tout voir" : "Voir moins"}</a>
+                           onClick={this.handleSeeMore}>{(this.state.size === 5) ? "Tout voir" : "Voir moins"}</a>
                     </footer>
                 </div>
             </div>
