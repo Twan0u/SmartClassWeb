@@ -39,8 +39,6 @@ class SearchBar extends Component {
             .catch(function(error) {
                 console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
             });
-            console.log(this.state.data);
-
     }
 
     handleSearch(event){

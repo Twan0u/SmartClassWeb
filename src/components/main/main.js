@@ -6,9 +6,6 @@ import CreateTokenProvider from "../../libraries/createTokenProvider";
 
 
 class Main extends Component {
-    constructor(props) {
-        super(props);
-    }
     isLoggedIn(){
         return CreateTokenProvider().isLoggedIn();
     }
