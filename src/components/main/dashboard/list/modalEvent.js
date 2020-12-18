@@ -68,7 +68,6 @@ class ModalEvent extends Component {
                 .catch(function (error) {
                     console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
                 });
-            //<input className="input" type="text" placeholder="2020-12-17" onChange={(e) => this.setState({date: e.target.value})} value={this.state.date}/>
         }
     }
 
