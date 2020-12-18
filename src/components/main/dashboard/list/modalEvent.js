@@ -36,15 +36,30 @@ class ModalEvent extends Component {
                     "date": this.state.date
                 })
             })
-                .then(() => {
+                .then((response) => {
+                    if(!response.ok){throw response}
+                    alert("L'événement à bien été modifié");
                     this.setState({
                         name: "",
                         description: "",
                         date: ""
                     });
                 })
-                .catch(function (error) {
-                    console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
+                .catch(function(error) {
+                    switch (error.status) {
+                        case 401:
+                            alert("Il y a eu une erreur dans l'authentification de l'utilisateur");
+                            break;
+                        case 403:
+                            alert("Le role de l'utilisateur ne permets pas cette action");
+                            break;
+                        case 404:
+                            alert("La ressource n'a pas été trouvée");
+                            break;
+                        default:
+                            alert("OOPS, il y a eu une erreur");
+                    }
+                    console.log("RESUME DE L'ERREUR : "+ error.message);
                 });
         }
         else {
@@ -58,15 +73,30 @@ class ModalEvent extends Component {
                     "date": this.state.date
                 })
             })
-                .then(() => {
-                    this.setState({
-                        name: "",
-                        description: "",
-                        date: ""
-                    });
-                })
-                .catch(function (error) {
-                    console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
+            .then((response) => {
+                if(!response.ok){throw response}
+                alert("L'événement à bien été ajouté");
+                this.setState({
+                    name: "",
+                    description: "",
+                    date: ""
+                });
+            })
+                .catch(function(error) {
+                    switch (error.status) {
+                        case 401:
+                            alert("Il y a eu une erreur dans l'authentification de l'utilisateur");
+                            break;
+                        case 403:
+                            alert("Le role de l'utilisateur ne permets pas cette action");
+                            break;
+                        case 404:
+                            alert("La ressource n'a pas été trouvée");
+                            break;
+                        default:
+                            alert("OOPS, il y a eu une erreur");
+                    }
+                    console.log("RESUME DE L'ERREUR : "+ error.message);
                 });
             //<input className="input" type="text" placeholder="2020-12-17" onChange={(e) => this.setState({date: e.target.value})} value={this.state.date}/>
         }

@@ -16,6 +16,7 @@ class Login extends Component {
 
     handleSubmit = (event) =>{
         event.preventDefault();
+        console.log(this.state.email + " " + this.state.password)
         const authProvider = CreateAuthProvider;
         fetch(authProvider.fetchApiURl('/login'), {
             method :'post',
@@ -26,13 +27,29 @@ class Login extends Component {
                 "password" : this.state.password
             })
         })
-            .then((response) => response.json())
+            .then((response) => {
+                if(!response.ok){throw response};
+                return response.json();
+            })
             .then((responseJson)=>{
                 authProvider.login(responseJson);
                 this.props.update();
             })
             .catch(function(error) {
-                console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
+                switch (error.status) {
+                    case 400:
+                        alert("Il manque le nom d'utilisateur ou le mot de passe");
+                        break;
+                    case 401:
+                        alert("Le nom d'utilisateur ou le mot de passe est Faux");
+                        break;
+                    case 404:
+                        alert("L'utilisateur n'existe pas");
+                        break;
+                    default:
+                        alert("OOPS, il y a eu une erreur");
+                }
+                console.log("RESUME DE L'ERREUR : "+ error.message);
             });
     }
 
