@@ -34,7 +34,12 @@ class Bubble extends Component{
                 mode: 'cors',
             })
         ])
-            .then(([res1, res2, res3]) => Promise.all([res1.json(), res2.json(), res3.json()]))
+            .then(([res1, res2, res3]) => {
+                if (!res1.ok){throw res1}
+                if (!res2.ok){throw res2}
+                if (!res3.ok){throw res3}
+                return Promise.all([res1.json(), res2.json(), res3.json()])
+            })
             .then(([res1, res2,  res3])=>{
                 this.setState({
                     isLoading : false,
@@ -44,7 +49,20 @@ class Bubble extends Component{
                 });
             })
             .catch(function(error) {
-                console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
+                switch (error.status) {
+                    case 401:
+                        alert("Il y a eu une erreur dans l'authentification de l'utilisateur");
+                        break;
+                    case 403:
+                        alert("Le role de l'utilisateur ne permets pas cette action");
+                        break;
+                    case 404:
+                        alert("La ressource n'a pas été trouvée");
+                        break;
+                    default:
+                        alert("OOPS, il y a eu une erreur");
+                }
+                console.log("RESUME DE L'ERREUR : "+ error.message);
             });
     }
 

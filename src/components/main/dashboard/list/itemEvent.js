@@ -31,6 +31,26 @@ class ItemEvent extends Component{
             headers : authProvider.fetchHeaders(),
             mode: 'cors',
         })
+            .then((response) => {
+                if(!response.ok){throw response}
+                alert("L'événement à bien été supprimé");
+            })
+            .catch(function(error) {
+                switch (error.status) {
+                    case 401:
+                        alert("Il y a eu une erreur dans l'authentification de l'utilisateur");
+                        break;
+                    case 403:
+                        alert("Le role de l'utilisateur ne permets pas cette action");
+                        break;
+                    case 404:
+                        alert("La ressource n'a pas été trouvée");
+                        break;
+                    default:
+                        alert("OOPS, il y a eu une erreur");
+                }
+                console.log("RESUME DE L'ERREUR : "+ error.message);
+            });
     }
 
     render() {

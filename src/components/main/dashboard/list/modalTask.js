@@ -42,7 +42,9 @@ class ModalTask extends Component {
                     "date": this.state.date
                 })
             })
-                .then(() => {
+                .then((response) => {
+                    if(!response.ok){throw response}
+                    alert("La tache à bien été modifiée");
                     this.setState({
                         title: "",
                         type: "",
@@ -50,8 +52,21 @@ class ModalTask extends Component {
                         date: ""
                     });
                 })
-                .catch(function (error) {
-                    console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
+                .catch(function(error) {
+                    switch (error.status) {
+                        case 401:
+                            alert("Il y a eu une erreur dans l'authentification de l'utilisateur");
+                            break;
+                        case 403:
+                            alert("Le role de l'utilisateur ne permets pas cette action");
+                            break;
+                        case 404:
+                            alert("La ressource n'a pas été trouvée");
+                            break;
+                        default:
+                            alert("OOPS, il y a eu une erreur");
+                    }
+                    console.log("RESUME DE L'ERREUR : "+ error.message);
                 });
         } else {
             fetch(authProvider.fetchApiURl('/tasks'), {
@@ -65,7 +80,9 @@ class ModalTask extends Component {
                     "date": this.state.date
                 })
             })
-                .then(() => {
+                .then((response) => {
+                    if(!response.ok){throw response}
+                    alert("La tache à bien été ajoutée");
                     this.setState({
                         title: "",
                         type: "",
@@ -73,8 +90,21 @@ class ModalTask extends Component {
                         date: ""
                     });
                 })
-                .catch(function (error) {
-                    console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
+                .catch(function(error) {
+                    switch (error.status) {
+                        case 401:
+                            alert("Il y a eu une erreur dans l'authentification de l'utilisateur");
+                            break;
+                        case 403:
+                            alert("Le role de l'utilisateur ne permets pas cette action");
+                            break;
+                        case 404:
+                            alert("La ressource n'a pas été trouvée");
+                            break;
+                        default:
+                            alert("OOPS, il y a eu une erreur");
+                    }
+                    console.log("RESUME DE L'ERREUR : "+ error.message);
                 });
         }
     }
@@ -86,14 +116,30 @@ class ModalTask extends Component {
             headers: authProvider.fetchHeaders(),
             mode: 'cors'
         })
-            .then((resp)=>resp.json())
+            .then((response) => {
+                if(!response.ok){throw response;}
+                return response.json();
+            })
             .then((respJson) => {
                 this.setState({
                     dataCategory: respJson,
                 });
             })
-            .catch(function (error) {
-                console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
+            .catch(function(error) {
+                switch (error.status) {
+                    case 401:
+                        alert("Il y a eu une erreur dans l'authentification de l'utilisateur");
+                        break;
+                    case 403:
+                        alert("Le role de l'utilisateur ne permets pas cette action");
+                        break;
+                    case 404:
+                        alert("La ressource n'a pas été trouvée");
+                        break;
+                    default:
+                        alert("OOPS, il y a eu une erreur");
+                }
+                console.log("RESUME DE L'ERREUR : "+ error.message);
             });
     }
 
