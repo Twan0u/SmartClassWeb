@@ -51,6 +51,7 @@ class ModalTask extends Component {
                         idCategory: "",
                         date: ""
                     });
+                    window.location.reload();
                 })
                 .catch(function(error) {
                     switch (error.status) {
@@ -89,6 +90,7 @@ class ModalTask extends Component {
                         idCategory: "",
                         date: ""
                     });
+                    window.location.reload();
                 })
                 .catch(function(error) {
                     switch (error.status) {
@@ -107,6 +109,7 @@ class ModalTask extends Component {
                     console.log("RESUME DE L'ERREUR : "+ error.message);
                 });
         }
+
     }
 
     componentDidMount() {

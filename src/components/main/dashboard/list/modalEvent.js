@@ -44,6 +44,7 @@ class ModalEvent extends Component {
                         description: "",
                         date: ""
                     });
+                    window.location.reload();
                 })
                 .catch(function(error) {
                     switch (error.status) {
@@ -81,6 +82,7 @@ class ModalEvent extends Component {
                     description: "",
                     date: ""
                 });
+                window.location.reload();
             })
                 .catch(function(error) {
                     switch (error.status) {

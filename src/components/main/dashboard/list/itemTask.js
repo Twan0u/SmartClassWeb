@@ -36,6 +36,7 @@ class ItemTask extends Component{
         .then((response) => {
             if(!response.ok){throw response}
             alert("La tache à bien été supprimée");
+            window.location.reload();
         })
         .catch(function(error) {
             switch (error.status) {

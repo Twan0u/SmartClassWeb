@@ -34,6 +34,7 @@ class ItemEvent extends Component{
             .then((response) => {
                 if(!response.ok){throw response}
                 alert("L'événement à bien été supprimé");
+                window.location.reload();
             })
             .catch(function(error) {
                 switch (error.status) {
