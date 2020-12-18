@@ -9,13 +9,15 @@ class ModalTask extends Component {
             isUpdate: props.isUpdate,
             id: props.id,
             title: props.title,
-            type: props.type,
-            category: props.category,
+            type: "",
+            idCategory: 1,
+            dataCategory:[],
             date: (props.isUpdate) ? formatDate(props.date) : formatDate(new Date()),
         };
         this.handleDelete = this.handleDelete.bind(this);
         this.handleSave = this.handleSave.bind(this);
         this.validateForm = this.validateForm.bind(this);
+        this.showDropdownOptions = this.showDropdownOptions.bind(this);
     }
 
     handleDelete() {
@@ -23,7 +25,7 @@ class ModalTask extends Component {
     }
 
     validateForm() {
-        return this.state.title?.length > 0 && this.state.date?.length > 0 && this.state.category?.length > 0;
+        return this.state.title?.length > 0 && this.state.date?.length > 0 ;
     }
 
     handleSave() {
@@ -36,8 +38,7 @@ class ModalTask extends Component {
                 body: JSON.stringify({
                     "title": this.state.title,
                     "type": this.state.type,
-                    // grammaire pour le moment
-                    "idSchoolSubjectSubCategory": 1,
+                    "idSchoolSubjectSubCategory": this.state.idCategory,
                     "date": this.state.date
                 })
             })
@@ -45,7 +46,7 @@ class ModalTask extends Component {
                     this.setState({
                         title: "",
                         type: "",
-                        category: "",
+                        idCategory: "",
                         date: ""
                     });
                 })
@@ -60,7 +61,7 @@ class ModalTask extends Component {
                 body: JSON.stringify({
                     "title": this.state.title,
                     "type": this.state.type,
-                    "idSchoolSubjectSubCategory": 1,
+                    "idSchoolSubjectSubCategory": this.state.idCategory,
                     "date": this.state.date
                 })
             })
@@ -68,7 +69,7 @@ class ModalTask extends Component {
                     this.setState({
                         title: "",
                         type: "",
-                        category: "",
+                        idCategory: "",
                         date: ""
                     });
                 })
@@ -76,6 +77,32 @@ class ModalTask extends Component {
                     console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
                 });
         }
+    }
+
+    componentDidMount() {
+        let authProvider = CreateAuthProvider;
+        fetch(authProvider.fetchApiURl('/classsubjectcategories'), {
+            method: 'get',
+            headers: authProvider.fetchHeaders(),
+            mode: 'cors'
+        })
+            .then((resp)=>resp.json())
+            .then((respJson) => {
+                this.setState({
+                    dataCategory: respJson,
+                });
+            })
+            .catch(function (error) {
+                console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
+            });
+    }
+
+    showDropdownOptions() {
+        let items = this.state.dataCategory;
+        items = items?.map(item => {
+            return(<option value={item.idsubcategory}>{item.schoolsubject} ({item.category}) </option>);
+        });
+        return items;
     }
 
     render() {
@@ -101,19 +128,23 @@ class ModalTask extends Component {
                             <div className="control">
                                 <label className="radio" form="lesson">Leçon </label>
                                 &nbsp;&nbsp;
-                                <input type="radio" id="lesson" name="answer"  value="leçon" onClick={(e) => this.setState({type: e.target.value})} />
+                                <input type="radio" id="lesson" name="answer" value="leçon"
+                                       onClick={(e) => this.setState({type: e.target.value})} />
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <label className="radio" form="homework">Devoir </label>
                                 &nbsp;&nbsp;
-                                <input type="radio" id="homework" name="answer" value="devoir" onClick={(e) => this.setState({type: e.target.value})}/>
+                                <input type="radio" id="homework" name="answer" value="devoir"
+                                       onClick={(e) => this.setState({type: e.target.value})}/>
                             </div>
                         </div>
                         <div className="field">
                             <label className="label">Matière</label>
                             <div className="control">
-                                <input className="input" type="text" placeholder="Grammaire"
-                                       onChange={(e) => this.setState({category: e.target.value})}
-                                       value={this.state.category}/>
+                                <div className="select">
+                                    <select onChange={(e) => this.setState({idCategory: e.target.value})}>
+                                        {this.showDropdownOptions()}
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <div className="field">
