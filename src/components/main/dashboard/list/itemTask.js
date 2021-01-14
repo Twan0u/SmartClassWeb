@@ -44,7 +44,7 @@ class ItemTask extends Component{
                     alert("Il y a eu une erreur dans l'authentification de l'utilisateur");
                     break;
                 case 403:
-                    alert("Le role de l'utilisateur ne permets pas cette action");
+                    alert("Le role de l'utilisateur ne permet pas cette action");
                     break;
                 case 404:
                     alert("La ressource n'a pas été trouvée");
