@@ -105,7 +105,6 @@ class List extends Component {
                     name={item.name}
                     description={item.description}
                     date={item.date}
-                    //date={item.date.toLocaleString('fr-FR', {day: '2-digit'}) + " " + item.date.toLocaleString('fr-FR', {month: 'short'})}
                     />
                 :
                 <ItemTask
@@ -115,8 +114,7 @@ class List extends Component {
                     schoolSubject={item.schoolsubject}
                     category={item.category}
                     date={item.date}
-                    //date={item.date.toLocaleString('fr-FR', {day: '2-digit'}) + " " + item.date.toLocaleString('fr-FR', {month: 'short'})}
-                    />
+                   />
                 ;
         });
         return items;

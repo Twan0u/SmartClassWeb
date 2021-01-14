@@ -17,7 +17,6 @@ export const createAuthProvider = () => {
         const token =  'Bearer ' + tokenProvider.getToken();
         return new Headers({
             'Accept': '*/*',
-            //'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, DELETE',
             'Content-Type': 'application/json',
             'Authorization': token,
         })
@@ -34,20 +33,3 @@ export const createAuthProvider = () => {
     }
 };
 export default createAuthProvider();
-
-/*fetch('http://192.168.1.22:4000/login', {
-    method :'post',
-    headers: new Headers({
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-    }),
-    mode: 'cors',
-    body: JSON.stringify({
-        "username" : "ant.lamb.al@gmail.com",
-        "password" : "1234"
-    })
-})
-    .then(response=> response.json())
-    .then((responseJson)=>{
-    console.log(responseJson)
-    });*/
