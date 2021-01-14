@@ -69,7 +69,7 @@ class SearchBar extends Component {
             return "";
         }else{
             return this.state.filteredData?.map(user =>{
-                return (<User name = {user.firstname + " " +user.lastname } />);
+                return (<User name ={user.firstname + " " + user.lastname} />);
             });
         }
     }

@@ -10,7 +10,7 @@ let createTokenProvider = () => {
         // multiply by 1000 to convert seconds into milliseconds
         return jwt.exp * 1000 || null;
     };
-   const isExpired = (exp) => {
+    const isExpired = (exp) => {
         if (!exp) {
             return false;
         }

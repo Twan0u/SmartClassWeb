@@ -6,7 +6,7 @@ class Login extends Component {
         super(props);
         this.state = {
             email: "",
-            password:""
+            password: ""
         };
     }
 
@@ -14,28 +14,30 @@ class Login extends Component {
         return this.state.email.length > 0 && this.state.password.length > 0;
     }
 
-    handleSubmit = (event) =>{
+    handleSubmit = (event) => {
         event.preventDefault();
         console.log(this.state.email + " " + this.state.password)
         const authProvider = CreateAuthProvider;
         fetch(authProvider.fetchApiURl('/login'), {
-            method :'post',
-            headers : authProvider.fetchHeaders(),
+            method: 'post',
+            headers: authProvider.fetchHeaders(),
             mode: 'cors',
-            body : JSON.stringify({
-                "username" : this.state.email,
-                "password" : this.state.password
+            body: JSON.stringify({
+                "username": this.state.email,
+                "password": this.state.password
             })
         })
             .then((response) => {
-                if(!response.ok){throw response};
+                if (!response.ok) {
+                    throw response
+                }
                 return response.json();
             })
-            .then((responseJson)=>{
+            .then((responseJson) => {
                 authProvider.login(responseJson);
                 this.props.update();
             })
-            .catch(function(error) {
+            .catch(function (error) {
                 switch (error.status) {
                     case 400:
                         alert("Il manque le nom d'utilisateur ou le mot de passe");
@@ -49,11 +51,11 @@ class Login extends Component {
                     default:
                         alert("OOPS, il y a eu une erreur");
                 }
-                console.log("RESUME DE L'ERREUR : "+ error.message);
+                console.log("RESUME DE L'ERREUR : " + error.message);
             });
     }
 
-    render(){
+    render() {
         return (
             <section className="hero is-fullheight">
                 <div className="hero-body">
@@ -64,7 +66,8 @@ class Login extends Component {
                                     <div className="field">
                                         <label htmlFor="" className="label">Email</label>
                                         <div className="control has-icons-left">
-                                            <input type="email" placeholder="e.g. bobsmith@gmail.com" className="input" onChange={(e) => this.setState({email : e.target.value})} required/>
+                                            <input type="email" placeholder="e.g. bobsmith@gmail.com" className="input"
+                                                   onChange={(e) => this.setState({email: e.target.value})} required/>
                                             <span className="icon is-small is-left">
                                               <i className="fa fa-envelope"/>
                                             </span>
@@ -73,14 +76,17 @@ class Login extends Component {
                                     <div className="field">
                                         <label htmlFor="" className="label">Password</label>
                                         <div className="control has-icons-left">
-                                            <input type="password" placeholder="*******" className="input" onChange={(e) => this.setState({password : e.target.value})} required/>
+                                            <input type="password" placeholder="*******" className="input"
+                                                   onChange={(e) => this.setState({password: e.target.value})}
+                                                   required/>
                                             <span className="icon is-small is-left">
                                               <i className="fa fa-lock"/>
                                             </span>
                                         </div>
                                     </div>
                                     <div className="field">
-                                        <button className="button is-success" disabled={!this.validateForm()} onClick={this.handleSubmit}>
+                                        <button className="button is-success" disabled={!this.validateForm()}
+                                                onClick={this.handleSubmit}>
                                             Login
                                         </button>
                                     </div>
@@ -94,4 +100,5 @@ class Login extends Component {
     }
 
 }
+
 export default Login;

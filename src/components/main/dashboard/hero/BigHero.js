@@ -1,35 +1,37 @@
-import React, { Component } from "react"
+import React, {Component} from "react"
 import CreateAuthProvider from "../../../../libraries/createAuthProvider";
 
 class Hero extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoading   : true,
-            teacher : {}
+            isLoading: true,
+            teacher: {}
         };
     }
 
     componentDidMount() {
-        this.setState({isLoading : true});
+        this.setState({isLoading: true});
         let authProvider = CreateAuthProvider;
 
         fetch(authProvider.fetchApiURl('/class/teacher'), {
-            method :'get',
-            headers : authProvider.fetchHeaders(),
+            method: 'get',
+            headers: authProvider.fetchHeaders(),
             mode: 'cors',
         })
             .then((response) => {
-                if(!response.ok){throw response}
+                if (!response.ok) {
+                    throw response
+                }
                 return response.json()
             })
-            .then((responseJson)=>{
+            .then((responseJson) => {
                 this.setState({
-                    isLoading : false,
-                    teacher : responseJson
+                    isLoading: false,
+                    teacher: responseJson
                 });
             })
-            .catch(function(error) {
+            .catch(function (error) {
                 switch (error.status) {
                     case 401:
                         alert("Il y a eu une erreur dans l'authentification de l'utilisateur");
@@ -43,12 +45,12 @@ class Hero extends Component {
                     default:
                         alert("OOPS, il y a eu une erreur");
                 }
-                console.log("RESUME DE L'ERREUR : "+ error.message);
+                console.log("RESUME DE L'ERREUR : " + error.message);
             });
     }
-    render()
-    {
-        const hello = `Bonjour ${this.state.teacher?.firstname + " "+ this.state.teacher?.lastname},`;
+
+    render() {
+        const hello = `Bonjour ${this.state.teacher?.firstname + " " + this.state.teacher?.lastname},`;
         return (
             <div className="hero-body">
                 <div className="container has-text-centered">
@@ -63,4 +65,5 @@ class Hero extends Component {
         );
     }
 }
+
 export default Hero;

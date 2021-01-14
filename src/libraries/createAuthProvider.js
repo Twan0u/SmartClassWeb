@@ -14,14 +14,14 @@ export const createAuthProvider = () => {
     };
 
     const fetchHeaders = () => {
-        const token =  'Bearer ' + tokenProvider.getToken();
+        const token = 'Bearer ' + tokenProvider.getToken();
         return new Headers({
             'Accept': '*/*',
             'Content-Type': 'application/json',
             'Authorization': token,
         })
     };
-    const fetchApiURl= (path)=> {
+    const fetchApiURl = (path) => {
         return data.url() + path;
     };
 

@@ -4,21 +4,23 @@ import Login from './login/login'
 import CreateTokenProvider from "../../libraries/createTokenProvider";
 
 
-
 class Main extends Component {
-    isLoggedIn(){
+    isLoggedIn() {
         return CreateTokenProvider().isLoggedIn();
     }
-    update = () =>{
+
+    update = () => {
         this.props.update();
     }
-    render(){
+
+    render() {
         return (
             <div>
-                {this.isLoggedIn()?<Dashboard />:<Login update={this.update}/>}
+                {this.isLoggedIn() ? <Dashboard/> : <Login update={this.update}/>}
             </div>
         );
     }
 
 }
+
 export default Main;

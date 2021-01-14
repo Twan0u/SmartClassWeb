@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React, {Component} from "react"
 
 class User extends Component {
     constructor(props) {
@@ -7,8 +7,9 @@ class User extends Component {
             name: props.name,
         };
     }
-    render(){
-        return(
+
+    render() {
+        return (
             <a className="panel-block">
                 <span className="panel-icon">
                     <i className="fa fa-user" aria-hidden="true"/>
@@ -17,4 +18,5 @@ class User extends Component {
             </a>);
     }
 }
+
 export default User;

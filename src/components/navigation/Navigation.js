@@ -1,20 +1,21 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import CreateAuthProvider from '../../libraries/createAuthProvider'
 
 class Navigation extends Component {
 
-    logout = ()=>{
+    logout = () => {
         const authProvider = CreateAuthProvider;
         authProvider.logout();
         this.props.update();
     }
-    render(){
+
+    render() {
         return (
             <nav className="navbar is-white" style={{borderTopWidth: 0}}>
                 <div className="container">
                     <div className="navbar-brand">
                         <a className="navbar-item" href="/">
-                            <img src={"./logo.png"} width="112" height="28"/>
+                            <img src={"./logo.png"} width="112" height="28" alt/>
                         </a>
                         <a role="button" className="navbar-burger" aria-label="menu" aria-expanded="false">
                             <span aria-hidden="true"/>
@@ -41,4 +42,5 @@ class Navigation extends Component {
         );
     }
 }
+
 export default Navigation

@@ -15,7 +15,7 @@ class List extends Component {
             tasks: [],
             events: [],
             modalvisible: false,
-            modalTaskVisible:false
+            modalTaskVisible: false
         };
 
         this.handleSeeMore = this.handleSeeMore.bind(this);
@@ -36,8 +36,12 @@ class List extends Component {
             })
         ])
             .then(([res1, res2]) => {
-                if (!res1.ok){throw res1;}
-                if (!res2.ok){throw res2;}
+                if (!res1.ok) {
+                    throw res1;
+                }
+                if (!res2.ok) {
+                    throw res2;
+                }
                 return Promise.all([res1.json(), res2.json()]);
             })
             .then(([res1, res2]) => {
@@ -47,7 +51,7 @@ class List extends Component {
                     tasks: res2
                 });
             })
-            .catch(function(error) {
+            .catch(function (error) {
                 switch (error.status) {
                     case 401:
                         alert("Il y a eu une erreur dans l'authentification de l'utilisateur");
@@ -61,7 +65,7 @@ class List extends Component {
                     default:
                         alert("OOPS, il y a eu une erreur");
                 }
-                console.log("RESUME DE L'ERREUR : "+ error.message);
+                console.log("RESUME DE L'ERREUR : " + error.message);
             });
     }
 
@@ -99,13 +103,13 @@ class List extends Component {
 
         let items = data?.slice(0, i);
         items = items?.map(item => {
-            return (item.isEvent)?
+            return (item.isEvent) ?
                 <ItemEvent
                     id={item.id}
                     name={item.name}
                     description={item.description}
                     date={item.date}
-                    />
+                />
                 :
                 <ItemTask
                     id={item.id}
@@ -114,7 +118,7 @@ class List extends Component {
                     schoolSubject={item.schoolsubject}
                     category={item.category}
                     date={item.date}
-                   />
+                />
                 ;
         });
         return items;
@@ -139,18 +143,20 @@ class List extends Component {
     render() {
         return (
             <div>
-                <ModalEvent isUpdate={false} visibility={this.state.modalvisible} handleVisibility={this.handleShowModal}/>
-                <ModalTask  isUpdate={false} visibility={this.state.modalTaskVisible} handleVisibility={this.handleShowModalTask}/>
+                <ModalEvent isUpdate={false} visibility={this.state.modalvisible}
+                            handleVisibility={this.handleShowModal}/>
+                <ModalTask isUpdate={false} visibility={this.state.modalTaskVisible}
+                           handleVisibility={this.handleShowModalTask}/>
                 <div className="card">
                     <header className="card-header">
                         <p className="card-header-title">
                             {this.state.title} ({this.state.isLoading ? "Loading" : (this.state.events.length + this.state.tasks.length)})
                         </p>
                         <p className="card-header-icon">Ajouter:
-                                &nbsp;
-                                <span className="button is-small is-primary" onClick={this.handleShowModal}>événement</span>
-                                &nbsp;&nbsp;
-                                <span className="button is-small is-primary" onClick={this.handleShowModalTask}>tâche</span>
+                            &nbsp;
+                            <span className="button is-small is-primary" onClick={this.handleShowModal}>événement</span>
+                            &nbsp;&nbsp;
+                            <span className="button is-small is-primary" onClick={this.handleShowModalTask}>tâche</span>
                         </p>
                     </header>
                     <div className="card-table">

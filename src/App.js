@@ -5,9 +5,10 @@ import Main from "./components/main/main"
 import Footer from "./components/footer/footer";
 
 class App extends Component {
-    update = () =>{
+    update = () => {
         this.forceUpdate();
     }
+
     render() {
         return (
             <div id="app">
@@ -18,4 +19,5 @@ class App extends Component {
         );
     }
 }
+
 export default App;
